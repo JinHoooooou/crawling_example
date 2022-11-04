@@ -2,3 +2,5 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 
 MELON_CHART_URI = "https://www.melon.com/chart/"
 GENIE_CHART_URI = "https://www.genie.co.kr/chart/top200"
+FLO_CHART_URI = "https://www.music-flo.com/browse"
+VIBE_CHART_URI = "https://vibe.naver.com/chart/total"

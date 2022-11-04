@@ -20,8 +20,10 @@ class GenieChartCrawler:
         music_chart_top_100 = music_chart_1_to_50 + music_chart_51_to_100
 
         for chart in music_chart_top_100:
-            song_info = chart.select("div.wrap_song_info a")
-            info = {"title": song_info[0].text, "singer": song_info[1].text}
+            title = chart.select("a.title")[0].text.strip()
+            artist = chart.select("a.artist")[0].text
+
+            info = {"title": title, "artist": artist}
             result["chart"].append(info)
 
         return result
