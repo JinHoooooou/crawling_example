@@ -2,7 +2,8 @@ import json
 import warnings
 from unittest import TestCase
 
-from src.constant import USER_AGENT, MELON_CHART_URI, GENIE_CHART_URI, FLO_CHART_URI, VIBE_CHART_URI
+from src.constant import USER_AGENT, MELON_CHART_URI, GENIE_CHART_URI, FLO_CHART_URI, VIBE_CHART_URI, VIBE_CHART_API, \
+    FLO_CHART_API
 from src.music_chart_crawler.flo import FloChartCrawler
 from src.music_chart_crawler.genie import GenieChartCrawler
 from src.music_chart_crawler.melon import MelonChartCrawler
@@ -68,7 +69,7 @@ class GenieChartPageCrawlingTest(TestCase):
 class FloChartPageCrawlingTest(TestCase):
     def setUp(self) -> None:
         warnings.simplefilter("ignore", category=ResourceWarning)
-        self._uri = FLO_CHART_URI
+        self._uri = FLO_CHART_API
         self._header = {"User-Agent": USER_AGENT}
 
     def test_should_return_page_title_on_get_title_method(self):
@@ -78,8 +79,8 @@ class FloChartPageCrawlingTest(TestCase):
         # When: get_title() 메소드를 호출 할 때
         title = crawler.get_title()
 
-        # Then: "플로"가 포함되어야 한다.
-        self.assertIn("플로", title)
+        # Then: "FLO"가 포함되어야 한다.
+        self.assertIn("FLO", title)
 
     def test_should_return_json_format_music_chart_and_page_uri(self):
         # Given: 음원 차트 크롤러가 주어진다.
@@ -97,7 +98,7 @@ class FloChartPageCrawlingTest(TestCase):
 class VibeChartPageCrawlingTest(TestCase):
     def setUp(self) -> None:
         warnings.simplefilter("ignore", category=ResourceWarning)
-        self._uri = VIBE_CHART_URI
+        self._uri = VIBE_CHART_API
         self._header = {"User-Agent": USER_AGENT}
 
     def test_should_return_page_title_on_get_title_method(self):
@@ -107,8 +108,8 @@ class VibeChartPageCrawlingTest(TestCase):
         # When: get_title() 메소드를 호출 할 때
         title = crawler.get_title()
 
-        # Then: "바이브"가 포함되어야 한다.
-        self.assertIn("바이브", title)
+        # Then: "Top 100"이 포함되어야 한다.
+        self.assertIn("Top 100", title)
 
     def test_should_return_json_format_music_chart_and_page_uri(self):
         # Given: 음원 차트 크롤러가 주어진다.
