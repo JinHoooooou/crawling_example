@@ -3,8 +3,15 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-from src.constant import MELON_CHART_URI, USER_AGENT, GENIE_CHART_URI, FLO_CHART_API, FLO_CHART_URI, VIBE_CHART_URI, \
-    VIBE_CHART_API
+from src.constant import (
+    FLO_CHART_API,
+    FLO_CHART_URI,
+    GENIE_CHART_URI,
+    MELON_CHART_URI,
+    USER_AGENT,
+    VIBE_CHART_API,
+    VIBE_CHART_URI,
+)
 
 
 class MusicChart:

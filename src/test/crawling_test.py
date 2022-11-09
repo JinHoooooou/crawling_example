@@ -1,7 +1,7 @@
 from unittest import TestCase
 
+from src.constant import FLO_CHART_URI, GENIE_CHART_URI, MELON_CHART_URI, VIBE_CHART_URI
 from src.music_chart_crawler.music_chart import MusicChart
-from src.constant import FLO_CHART_URI, VIBE_CHART_URI, GENIE_CHART_URI, MELON_CHART_URI
 
 
 class MusicChartTest(TestCase):
