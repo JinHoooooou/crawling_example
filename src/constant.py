@@ -15,11 +15,12 @@ PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCE_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_DIR = os.path.join(PROJECT_ROOT_DIR, "config")
 
-KAKAO_LOGIN_HOST = "https://kauth.kakao.com"
+KAKAO_AUTH_HOST = "https://kauth.kakao.com"
 TOKEN_URI = "/oauth/token"
 
-KAKAO_MESSAGE_HOST = "https://kapi.kakao.com"
-KAKAO_MESSAGE_TO_ME_URI = "/v2/api/talk/memo/default/send"
+KAKAO_API_HOST = "https://kapi.kakao.com"
+MESSAGE_TO_ME_URI = "/v2/api/talk/memo/default/send"
+ACCESS_TOKEN_INFO_URI = "/v1/user/access_token_info"
 
 KAKAO_REDIRECT_URL_LIST = [
     "https://naver.com",

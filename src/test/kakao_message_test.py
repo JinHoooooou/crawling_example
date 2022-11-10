@@ -4,39 +4,23 @@ from unittest import TestCase
 
 import requests
 
-from constant import KAKAO_MESSAGE_HOST, KAKAO_MESSAGE_TO_ME_URI, CONFIG_DIR, MELON_CHART_URI
+from constant import KAKAO_API_HOST, MESSAGE_TO_ME_URI, CONFIG_DIR, MELON_CHART_URI
 from music_chart_crawler.music_chart import MusicChart
+from kakao.message import KakaoMessage
 
 
 class KakaoMessageToMeTest(TestCase):
     def setUp(self) -> None:
-        self._request_url = f"{KAKAO_MESSAGE_HOST}{KAKAO_MESSAGE_TO_ME_URI}"
-        self._headers = {"Authorization": f"Bearer {self._get_access_token()}"}
+        pass
 
-    def test_should_response_200_on_text_message_to_me(self):
+    def test_send_text_message_success(self):
+        """"""
         # Given: 요청에 필요한 정보들이 주어진다.
-        melon_chart = {"uri": MELON_CHART_URI, "chart": "멜론 차트"}
-        link = melon_chart["uri"]
-        text = melon_chart["chart"]
-        text_template = {
-            "object_type": "text",
-            "text": text,
-            "link": {
-                "web_url": link,
-                "mobile_web_url": link
-            },
-            "button_title": "멜론으로 이동"
-        }
-        data = {"template_object": json.dumps(text_template)}
+        kakao_message = KakaoMessage()
 
-        # When: 나에게 메시지 보내기 요청
-        response = requests.post(self._request_url, data=data, headers=self._headers)
+        response = kakao_message.send_text_message(text="테스트", link="https://naver.com")
 
-        # Then: 응답의 status code는 200이어야 한다.
-        self.assertEqual(response.status_code, 200)
-        # And: 응답의 result_code는 0이다.
-        response_body = json.loads(response.text)
-        self.assertEqual(response_body["result_code"], 0)
+        print(response.text)
 
     def test_should_response_200_on_feed_message_to_me(self):
         # Given: 요청에 필요한 정보들이 주어진다.
