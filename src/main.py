@@ -19,5 +19,4 @@ if __name__ == '__main__':
 
     kakao_message = KakaoMessage()
 
-
     kakao_message.send_text_message(text=chart, link=melon_chart["uri"])
