@@ -10,7 +10,7 @@ def get_access_token():
     url = KAKAO_AUTH_HOST + TOKEN_URI
     data = {
         "grant_type": "refresh_token",
-        "client_id": "9bb7b58c60a4a53ab539d3b89e6d6f65",
+        "client_id": os.getenv("KAKAO_REST_API_KEY"),
         "refresh_token": os.getenv("KAKAO_REFRESH_TOKEN", None)
     }
 
