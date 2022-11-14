@@ -9,8 +9,15 @@ from constant import KAKAO_API_HOST, MESSAGE_TO_ME_URI, CONFIG_DIR, ACCESS_TOKEN
 class KakaoMessage:
     def __init__(self):
         self._kakao_rest_api_key = os.getenv("KAKAO_REST_API_KEY", None)
-        self._access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
-        self._refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
+        self._access_token = None
+        self._refresh_token = None
+        self._get_env()
+
+    def _get_env(self):
+        with open(os.path.join(CONFIG_DIR, ".env"), "r") as env_file:
+            env = json.load(env_file)
+            self._access_token = env.get("access_token", None)
+            self._refresh_token = env.get("refresh_token", None)
 
     def send_text_message(self, text, link):
         if not self._is_valid_token():
@@ -25,7 +32,7 @@ class KakaoMessage:
                 "web_url": link,
                 "mobile_web_url": link
             },
-            "button_title": "멜론으로 이동"
+            "button_title": "더보기"
         }
         data = {"template_object": json.dumps(text_template)}
 
@@ -52,8 +59,7 @@ class KakaoMessage:
         response = requests.post(url=url, data=data)
         response_body = json.loads(response.text)
 
-        os.putenv("KAKAO_ACCESS_TOKEN", response_body["access_token"])
-        self._access_token = response_body["access_token"]
-        if "refresh_token" in response_body:
-            os.putenv("KAKAO_REFRESH_TOKEN", response_body["refresh_token"])
-            self._refresh_token = response_body["refresh_token"]
+        with open(os.path.join(CONFIG_DIR, ".env"), "w") as env_file:
+            self._access_token = response_body.get("access_token", self._access_token)
+            self._refresh_token = response_body.get("access_token", self._refresh_token)
+            env_file.write(response.text)
