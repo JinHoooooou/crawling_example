@@ -5,7 +5,7 @@ name: Kakao Message To Me
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "1 * * * *"
 
 jobs:
   build:
