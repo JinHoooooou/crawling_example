@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}},
-      KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
       
     steps:
     - uses: actions/checkout@v3
@@ -27,3 +24,6 @@ jobs:
     - name: Run main.py
       run: |
         python main.py
+      env:
+        KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
+        KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
