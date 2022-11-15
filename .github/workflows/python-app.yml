@@ -5,7 +5,7 @@ name: Kakao Message To Me
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
   build:
@@ -26,4 +26,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run main.py
       run: |
-        python main.py
+        python src/main.py
