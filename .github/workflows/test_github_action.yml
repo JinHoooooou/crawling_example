@@ -3,6 +3,9 @@
 
 name: Test For Secret Key
 
+on:
+  workflow-dispatch
+
 jobs:
   build:
     runs-on: ubuntu-latest
