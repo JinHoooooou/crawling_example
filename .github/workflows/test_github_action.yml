@@ -4,7 +4,7 @@
 name: Test For Secret Key
 
 on:
-  workflow-dispatch
+  workflow_dispatch
 
 jobs:
   build:
