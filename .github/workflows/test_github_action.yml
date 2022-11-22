@@ -29,6 +29,4 @@ jobs:
         visibility: "private"
         
     - name: Use Secret Key
-      run: echo $MY_TEST_SECRET_KEY  is will *** So It is Active!!!
-      env:
-        TEST: ${{secrets.MY_TEST_SECRET_KEY}}
+      run: echo ${{secretes.MY_TEST_SECRET_KEY}} and ${{secrets.REPO_ACCESS_TOKEN}} will be invisible So It is Active!!!
