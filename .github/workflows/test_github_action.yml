@@ -35,4 +35,4 @@ jobs:
         
     - name: Use Secret Key
       run: |
-        echo ${{secretes.MY_TEST_SECRET_KEY}} is will *** So It is Active!!!
+        echo ${{secrets.MY_TEST_SECRET_KEY}} is will *** So It is Active!!!
