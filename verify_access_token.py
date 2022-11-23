@@ -56,4 +56,4 @@ def get_tokens():
 
 
 if __name__ == "__main__":
-    access_token, refresh_token = get_tokens()
+    print(get_tokens())
