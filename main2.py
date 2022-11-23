@@ -1,5 +1,5 @@
 from crawling_music_chart import extract_music_charts
-from kakao_message import send_list_message_to_me
+from kakao_message import send_list_message_to_me_test
 
 if __name__ == "__main__":
     charts_by_platform = extract_music_charts()
