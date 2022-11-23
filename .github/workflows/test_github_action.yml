@@ -28,8 +28,8 @@ jobs:
         run: |
           output=$(python verify_access_token.py)
           echo "access_token=$(cut -d ' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
-          echo "access_token=$(cut -d ' ' -f1 <<< $output)"
-          echo "refresh_token=$(cut -d ' ' -f2 <<< $output)"
+          access_token=$(cut -d ' ' -f1 <<< $output)
+          refresh_token=$(cut -d ' ' -f2 <<< $output)
           echo $access_token
           echo $refresh_token
         env:
