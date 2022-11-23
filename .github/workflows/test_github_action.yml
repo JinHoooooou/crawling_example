@@ -81,7 +81,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run main.py
         run: |
-          python main.py
+          python main2.py
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_ACCESS_TOKEN: ${{secrets.MY_TEST_SECRET_KEY1}}
