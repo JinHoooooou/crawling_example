@@ -28,7 +28,7 @@ jobs:
         run: |
           output=$(python verify_access_token.py)
           echo $output
-          for word in $temp do echo $word done
+          for word in $output do echo $word done
           echo "access_token=$(cut -d' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
