@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       access_token: ${{steps.verify_access_token.outputs.access_token}}
-      refresh_token: ${{steps.verify_access_token.outputs.refresh_token}}
     steps:
       - name: Checkout My Repository
         uses: actions/checkout@v3
@@ -28,15 +27,14 @@ jobs:
         id: verify_access_token
         run: |
           output=$(python verify_access_token.py)
+          echo $output
           echo "access_token=$(cut -d' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
-          echo "refresh_token=${cut -d' ' -f2 <<< $output}" >> $GITHUB_OUTPUT
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
       - name: Print Output
         run: |
           echo "${{ steps.verify_access_token.outputs.access_token}}"
-          echo "${{ steps.verify_access_token.outputs.refresh_token}}"
 
       - name: Create Secret Key
         uses: hmanzur/actions-set-secret@v2.0.0
