@@ -32,7 +32,7 @@ jobs:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
       - name: Print Output
-        run: echo "${{ steps.verify_access_token.outputs.tokens}}
+        run: echo "${{ steps.verify_access_token.outputs.tokens}}"
 
       - name: Create Secret Key
         uses: hmanzur/actions-set-secret@v2.0.0
