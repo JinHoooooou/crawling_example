@@ -59,3 +59,16 @@ def send_list_message_to_me(data, platform_name, link):
     response = requests.post(url, data=data, headers=headers)
 
     return response
+
+
+def send_list_message_to_me_test(data, platform_name, link):
+    access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
+
+    url = KAKAO_API_HOST + MESSAGE_TO_ME_URI
+    headers = {"Authorization": f"Bearer {access_token}"}
+    list_template = build_list_template(data, platform_name, link)
+    data = {"template_object": json.dumps(list_template, ensure_ascii=False)}
+
+    response = requests.post(url, data=data, headers=headers)
+
+    return response
