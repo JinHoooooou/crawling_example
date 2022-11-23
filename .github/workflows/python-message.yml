@@ -82,5 +82,5 @@ jobs:
           python main2.py
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
-          KAKAO_ACCESS_TOKEN: ${{secrets.MY_TEST_SECRET_KEY1}}
-          KAKAO_REFRESH_TOKEN: ${{secrets.MY_TEST_SECRET_KEY2}}
+          KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
+          KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
