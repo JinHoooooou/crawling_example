@@ -26,6 +26,7 @@ TOKEN_URI = "/oauth/token"
 
 KAKAO_API_HOST = "https://kapi.kakao.com"
 MESSAGE_TO_ME_URI = "/v2/api/talk/memo/default/send"
+ACCESS_TOKEN_INFO_URI = "/v1/user/access_token_info"
 
 # directory path
 PROJECT_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
