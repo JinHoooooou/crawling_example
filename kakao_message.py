@@ -70,5 +70,6 @@ def send_list_message_to_me_test(data, platform_name, link):
     data = {"template_object": json.dumps(list_template, ensure_ascii=False)}
 
     response = requests.post(url, data=data, headers=headers)
+    print(response.status_code)
 
     return response
