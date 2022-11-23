@@ -10,7 +10,7 @@ jobs:
   job_1:
     runs-on: ubuntu-latest
     outputs:
-      access_token: ${{steps.verify_access_token.outputs}}
+      access_token: ${{steps.verify_access_token.outputs.tokens}}
     steps:
       - name: Checkout My Repository
         uses: actions/checkout@v3
