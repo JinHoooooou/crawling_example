@@ -1,10 +1,12 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Test For Secret Key
+name: Send Kakao Message about music chart to me
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
 
 jobs:
   job_1:
@@ -40,15 +42,11 @@ jobs:
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
-      - name: Print Output
-        run: |
-          echo "${{ steps.verify_access_token.outputs.access_token}}"
-          echo "${{ steps.verify_access_token.outputs.refresh_token}}"
 
       - name: Create Access Token
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
-          name: "MY_TEST_SECRET_KEY1"
+          name: "KAKAO_ACCESS_TOKEN"
           value: ${{steps.verify_access_token.outputs.access_token}}
           repository: JinHoooooou/crawling_example
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
@@ -57,7 +55,7 @@ jobs:
       - name: Create Refresh Token
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
-          name: "MY_TEST_SECRET_KEY2"
+          name: "KAKAO_REFRESH_TOKEN"
           value: ${{steps.verify_access_token.outputs.refresh_token}}
           repository: JinHoooooou/crawling_example
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
