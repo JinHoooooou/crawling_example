@@ -52,7 +52,7 @@ def get_tokens():
     if not is_valid(access_token):
         access_token, refresh_token = update_tokens()
 
-    return f"{access_token}      {refresh_token}"
+    return f"{access_token} {refresh_token}"
 
 
 if __name__ == "__main__":

@@ -30,9 +30,11 @@ jobs:
           output=$(python verify_access_token.py)
           echo "access_token=$(cut -d ' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
           refresh_token=$(cut -d ' ' -f2 <<< $output)
-          if [ $refresh_token -ne ${{secrets.KAKAO_REFRESH_TOKEN}} ]; then
+          if [ ${refresh_token} == ${{secrets.KAKAO_REFRESH_TOKEN}} ]; then
+            echo "Refresh Token is still valid"
             echo "refresh_token=$(cut -d ' ' -f2 <<< $output)" >> $GITHUB_OUTPUT
           else
+            echo "refresh token is invalid --> will be updated"
             echo "refresh_token=${{secrets.KAKAO_REFRESH_TOKEN}}" >> $GITHUB_OUTPUT
           fi
         env:
