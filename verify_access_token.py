@@ -25,7 +25,7 @@ def update_tokens():
         return
     if refresh_token is None:
         print("Invalid Refresh Token, Update Tokens Using Authorization Code")
-        return
+        return None, None
 
     data = {
         "grant_type": "refresh_token",
@@ -36,7 +36,7 @@ def update_tokens():
     response = requests.post(url=url, data=data)
     if response.status_code != 200:
         print("Invalid Refresh Token, Update Tokens Using Authorization Code")
-        return
+        return None, None
 
     response_body = json.loads(response.text)
     updated_access_token = response_body.get("access_token", None)
