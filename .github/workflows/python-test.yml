@@ -1,12 +1,10 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Send Kakao Message about music chart to me
+name: Test
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"
 
 jobs:
   job_1:
@@ -22,28 +20,30 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: run verify_access_token
+
+      - name: Verify Kakao Tokens
         id: verify_access_token
         run: |
           output=$(python verify_access_token.py)
           echo "access_token=$(cut -d ' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
+          echo "refresh_token=$(cut -d ' ' -f2 <<< $output)" >> $GITHUB_OUTPUT
           refresh_token=$(cut -d ' ' -f2 <<< $output)
           if [ ${refresh_token} == ${{secrets.KAKAO_REFRESH_TOKEN}} ]; then
             echo "Refresh Token is still valid"
-            echo "refresh_token=${{secrets.KAKAO_REFRESH_TOKEN}}" >> $GITHUB_OUTPUT
           else
             echo "refresh token is invalid --> will be updated"
-            echo "refresh_token=$(cut -d ' ' -f2 <<< $output)" >> $GITHUB_OUTPUT
           fi
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
 
       - name: Create Access Token
+        if: ${{ steps.verify_access_token.outputs.access_token == secrets.KAKAO_ACCESS_TOKEN }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_ACCESS_TOKEN"
@@ -53,6 +53,7 @@ jobs:
           visibility: "private"
 
       - name: Create Refresh Token
+        if: ${{ steps.verify_access_token.outputs.refresh_token == secrets.KAKAO_REFRESH_TOKEN }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_REFRESH_TOKEN"
@@ -81,6 +82,4 @@ jobs:
         run: |
           python main2.py
         env:
-          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
-          KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
