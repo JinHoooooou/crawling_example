@@ -21,10 +21,10 @@ def update_tokens():
     refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
 
     if client_id is None:
-        print("Invalid Client ID, Check Your Client ID")
-        return
+        print("Invalid Client ID, Check Your Client ID", flush=True)
+        return None, None
     if refresh_token is None:
-        print("Invalid Refresh Token, Update Tokens Using Authorization Code")
+        print("Invalid Refresh Token, Update Tokens Using Authorization Code", flush=True)
         return None, None
 
     data = {
@@ -35,7 +35,7 @@ def update_tokens():
 
     response = requests.post(url=url, data=data)
     if response.status_code != 200:
-        print("Invalid Refresh Token, Update Tokens Using Authorization Code")
+        print("Invalid Refresh Token, Update Tokens Using Authorization Code", flush=True)
         return None, None
 
     response_body = json.loads(response.text)
