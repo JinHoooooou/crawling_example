@@ -133,3 +133,6 @@ dmypy.json
 
 # KAKAO
 config/*
+
+# Shell Scripts
+*.sh

@@ -15,7 +15,7 @@ def is_valid(token):
     return response.status_code == 200
 
 
-def update_tokens():
+def renew_tokens():
     url = KAKAO_AUTH_HOST + TOKEN_URI
     client_id = os.getenv("KAKAO_REST_API_KEY", None)
     refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
@@ -47,10 +47,10 @@ def update_tokens():
 
 def get_tokens():
     access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
-    refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
+    refresh_token = None
 
     if not is_valid(access_token):
-        access_token, refresh_token = update_tokens()
+        access_token, refresh_token = renew_tokens()
 
     return f"{access_token} {refresh_token}"
 
