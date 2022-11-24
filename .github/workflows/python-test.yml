@@ -43,7 +43,9 @@ jobs:
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
 
       - name: Create Access Token
-        if: ${{ steps.verify_access_token.outputs.access_token == secrets.KAKAO_ACCESS_TOKEN }}
+        env:
+          access_token: ${{secrets.KAKAO_ACCESS_TOKEN}}
+        if: ${{ steps.verify_access_token.outputs.access_token != env.access_token }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_ACCESS_TOKEN"
@@ -53,7 +55,9 @@ jobs:
           visibility: "private"
 
       - name: Create Refresh Token
-        if: ${{ steps.verify_access_token.outputs.refresh_token == secrets.KAKAO_REFRESH_TOKEN }}
+        env:
+          refresh_token: ${{secrets.KAKAO_REFRESH_TOKEN}}
+        if: ${{ steps.verify_access_token.outputs.refresh_token != env.refresh_token }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_REFRESH_TOKEN"
