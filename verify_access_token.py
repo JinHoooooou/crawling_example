@@ -47,7 +47,7 @@ def renew_tokens():
 
 def get_tokens():
     access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
-    refresh_token = None
+    refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
 
     if not is_valid(access_token):
         access_token, refresh_token = renew_tokens()
