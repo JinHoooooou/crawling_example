@@ -10,8 +10,8 @@ jobs:
   job_1:
     runs-on: ubuntu-latest
     outputs:
-      access_token: ${{steps.verify_tokens.outputs.access_token}}
-      refresh_token: ${{steps.verify_tokens.outputs.refresh_token}}
+      access_token: ${{steps.verify_access_token.outputs.access_token}}
+      refresh_token: ${{steps.verify_access_token.outputs.refresh_token}}
     steps:
       - name: Checkout My Repository
         uses: actions/checkout@v3
@@ -20,43 +20,41 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Verify Kakao Tokens
-        id: verify_tokens
+      - name: run verify_access_token
+        id: verify_access_token
         run: |
           output=$(python verify_access_token.py)
           echo "access_token=$(cut -d ' ' -f1 <<< $output)" >> $GITHUB_OUTPUT
-          echo "refresh_token=$(cut -d ' ' -f2 <<< $output)" >> $GITHUB_OUTPUT
+          refresh_token=$(cut -d ' ' -f2 <<< $output)
+          if [ ${refresh_token} == ${{secrets.KAKAO_REFRESH_TOKEN}} ]; then
+            echo "Refresh Token is still valid"
+            echo "refresh_token=${{secrets.KAKAO_REFRESH_TOKEN}}" >> $GITHUB_OUTPUT
+          else
+            echo "refresh token is invalid --> will be updated"
+            echo "refresh_token=$(cut -d ' ' -f2 <<< $output)" >> $GITHUB_OUTPUT
+          fi
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
-          KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
           KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
 
       - name: Create Access Token
-        env:
-          access_token: ${{secrets.KAKAO_ACCESS_TOKEN}}
-        if: ${{ steps.verify_tokens.outputs.access_token != env.access_token }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_ACCESS_TOKEN"
-          value: ${{steps.verify_tokens.outputs.access_token}}
+          value: ${{steps.verify_access_token.outputs.access_token}}
           repository: JinHoooooou/crawling_example
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           visibility: "private"
 
       - name: Create Refresh Token
-        env:
-          refresh_token: ${{secrets.KAKAO_REFRESH_TOKEN}}
-        if: ${{ steps.verify_tokens.outputs.refresh_token != env.refresh_token }}
         uses: hmanzur/actions-set-secret@v2.0.0
         with:
           name: "KAKAO_REFRESH_TOKEN"
-          value: ${{steps.verify_tokens.outputs.refresh_token}}
+          value: ${{steps.verify_access_token.outputs.refresh_token}}
           repository: JinHoooooou/crawling_example
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           visibility: "private"
@@ -81,4 +79,6 @@ jobs:
         run: |
           python main.py
         env:
+          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
           KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
+          KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}
