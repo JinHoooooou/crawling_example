@@ -45,12 +45,22 @@ def renew_tokens():
     return updated_access_token, updated_refresh_token
 
 
+def read_my_user_info(access_token):
+    url = KAKAO_API_HOST + "/v2/user/me"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = requests.get(url, headers=headers)
+
+    return response.status_code
+
+
 def get_tokens():
     access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
     refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
 
     if not is_valid(access_token):
         access_token, refresh_token = renew_tokens()
+
+    read_my_user_info(access_token)
 
     return f"{access_token} {refresh_token}"
 
