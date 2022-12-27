@@ -44,4 +44,4 @@ def send_list_message_to_me(data, platform_name, link):
 
     response = requests.post(url, data=data, headers=headers)
 
-    return response
+    return response.status_code

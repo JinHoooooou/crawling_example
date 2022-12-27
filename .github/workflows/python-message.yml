@@ -84,6 +84,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run main.py
         run: |
-          python main.py
+          output=$(python main.py)
+          echo $output
         env:
           KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
