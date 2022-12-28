@@ -84,4 +84,5 @@ jobs:
           output=$(python main.py)
           echo $output
         env:
-          KAKAO_ACCESS_TOKEN: ${{secrets.KAKAO_ACCESS_TOKEN}}
+          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
+          KAKAO_REFRESH_TOKEN: ${{secrets.KAKAO_REFRESH_TOKEN}}

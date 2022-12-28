@@ -3,7 +3,7 @@ import os
 
 import requests
 
-from constant import KAKAO_API_HOST, MESSAGE_TO_ME_URI
+from constant import KAKAO_API_HOST, MESSAGE_TO_ME_URI, KAKAO_AUTH_HOST, TOKEN_URI
 
 
 def build_list_template(data, platform_name, link):
@@ -34,8 +34,37 @@ def build_list_template(data, platform_name, link):
     return list_template
 
 
+def get_access_token():
+    url = KAKAO_AUTH_HOST + TOKEN_URI
+    client_id = os.getenv("KAKAO_REST_API_KEY", None)
+    refresh_token = os.getenv("KAKAO_REFRESH_TOKEN", None)
+
+    if client_id is None:
+        print("Invalid Client ID, Check Your Client ID", flush=True)
+        return None
+    if refresh_token is None:
+        print("Invalid Refresh Token, Update Tokens Using Authorization Code")
+        return None
+
+    data = {
+        "grant_type": "refresh_token",
+        "client_id": client_id,
+        "refresh_token": refresh_token
+    }
+
+    response = requests.post(url=url, data=data)
+    if response.status_code != 200:
+        print("Invalid Refresh Token, Update Tokens Using Authorization Code2")
+        return None
+
+    response_body = json.loads(response.text)
+    access_token = response_body.get("access_token", None)
+
+    return access_token
+
+
 def send_list_message_to_me(data, platform_name, link):
-    access_token = os.getenv("KAKAO_ACCESS_TOKEN", None)
+    access_token = get_access_token()
 
     url = KAKAO_API_HOST + MESSAGE_TO_ME_URI
     headers = {"Authorization": f"Bearer {access_token}"}
